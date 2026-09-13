@@ -9,6 +9,18 @@ st.set_page_config(
     layout="wide"
 )
 
+st.markdown("""
+    <style>
+    .main {
+        padding: 2rem 3rem;
+    }
+    .stButton>button {
+        border-radius: 8px;
+        font-weight: 600;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 if "vector_store" not in st.session_state:
     st.session_state.vector_store = None
 if "book_loaded" not in st.session_state:

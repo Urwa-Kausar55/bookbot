@@ -1,6 +1,7 @@
 import os
 import hashlib
 import pytesseract
+import streamlit as st
 from pdf2image import convert_from_path
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 POPPLER_PATH = r"C:\Users\LENOVO\Downloads\Release-26.07.0-0\poppler-26.07.0\Library\bin"
@@ -38,8 +39,12 @@ def load_and_chunk_pdf(pdf_path):
 
     return chunks, total_pages
 
+@st.cache_resource
+def get_embedding_model():
+    return HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+
 def create_vector_store(chunks, file_identifier):
-    embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+    embeddings = get_embedding_model()
 
     file_hash = hashlib.md5(file_identifier.encode()).hexdigest()[:10]
     persist_directory = f"chroma_db_{file_hash}"

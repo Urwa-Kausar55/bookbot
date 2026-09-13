@@ -31,8 +31,8 @@ def load_and_chunk_pdf(pdf_path):
         raise ValueError("This PDF doesn't contain readable text. Please upload a text-based PDF.")
 
     splitter = RecursiveCharacterTextSplitter(
-        chunk_size=1000,
-        chunk_overlap=200,
+        chunk_size=1500,
+        chunk_overlap=150,
         separators=["\n\n", "\n", ". ", " "]
     )
     chunks = splitter.split_documents(pages)
